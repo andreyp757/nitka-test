@@ -1,0 +1,22 @@
+<!--The content below is only a placeholder and can be replaced.-->
+  <h1  style="text-align:center">Welcome to {{ title }}!</h1>
+  <main>
+    <div class="screen">Screen</div>
+    <div class="hall">
+      <ul>
+        <li *ngFor="let raw of _hall | async; let r = index;" style="display: inline-flex">
+          <span class="raw">{{ r + 1 }}</span>
+          <span class="seat" *ngFor="let seat of raw; let s = index;"
+                [ngClass]="{'selected': seat.selected }"  
+                [ngStyle]="seat.reserved && { 'background': 'red' }"
+                (click)="!seat.reserved && chooseSeat(r, s)">{{ s + 1 }}</span> 
+        </li>
+      </ul>
+    </div>
+    <div class="selection">
+      Choose your seats please
+    </div>
+  </main>
+
+
+
