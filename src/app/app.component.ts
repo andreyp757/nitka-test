@@ -24,26 +24,33 @@ export class AppComponent {
   public selectedSeats: Observable<any>;
   public hall: HallStore<any>;
 
-  constructor(public dialog: MatDialog){
+  constructor(public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    const matrix = new Array(this.ROWS).fill(0).map(() => new Array(this.SEATS).fill({ reserved: false, selected: false }));
+    const matrix = new Array(this.ROWS)
+      .fill(0)
+      .map(() => new Array(this.SEATS)
+        .fill({ reserved: false, selected: false }));
+
     this.hall = new HallStore<any>(reservationReducer, matrix);
     this.hall.dispatch({ type: ACTION_TYPES.RANDOM });
     this.selectedSeats = this.hall.pipe(
       map(hall => {
         let selectedSeats = [];
         hall.map((row, rowIndex) => {
-          row.filter((seat, seatIndex) => seat.selected && selectedSeats.push({ row : rowIndex, seat: seatIndex }))
+          row.filter((seat, seatIndex) => seat.selected && selectedSeats.push({ row: rowIndex, seat: seatIndex }))
         })
         return selectedSeats;
       })
     )
   }
-   
-  public chooseSeat(row, seat){
-    this.hall.dispatch({ type: ACTION_TYPES.TOGGLE, payload: { row: row, seat: seat }})
+
+  public chooseSeat(row, seat) {
+    this.hall.dispatch({
+      type: ACTION_TYPES.TOGGLE,
+      payload: { row: row, seat: seat }
+    });
   }
 
   public clearSeats() {
@@ -52,16 +59,16 @@ export class AppComponent {
 
   public reserveSeats() {
     const dialogRef = this.dialog.open(ConfirmationModal);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (!result) return;
         this.hall.dispatch({ type: ACTION_TYPES.RESERVE })
         this.dialog.open(ConfirmationModal, { data: true })
-      }
-    });
+      });
   }
 
 
-   
+
 }
 
 
