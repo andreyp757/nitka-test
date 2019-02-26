@@ -1,0 +1,79 @@
+h1 {
+    margin-bottom: 50px;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 3% 5% 60% 5% 24% 3%;
+    grid-template-rows: 150px auto;
+    grid-template-areas: 
+    ". screen screen screen . ." 
+    ". . hall . selection .";
+}
+
+.screen {
+    grid-area: screen;
+    border-top: 3px solid #2196F3;
+    text-align: center;
+    border-radius:100%;
+    text-transform: uppercase;
+    font-size: 2vh;
+    line-height: 7vh;
+    color: #8989ab;
+}
+
+.hall {
+    grid-area: hall;
+    .row {
+        margin-bottom: 1vh;
+    } 
+    .row-number {
+        position: absolute;
+        top: 0%;
+        left: -50px;
+        color: white;
+        background: #8989ab;
+        padding: 3px 10px;
+        border-radius: 100%;
+    }
+    .seat {
+        background: #049c14;
+        color: white;
+        border-radius: 5px;
+        font-size: 1.3vh;
+        cursor: default;
+        &.selected {
+            background: orange;
+        }
+    }
+}
+
+.selection {
+    grid-area: selection;
+    padding: 30px;
+    text-align: center;
+    font-size: 1.5vh;
+    .total {
+        padding-top: 7px;
+        margin-top: 7px;
+        border-top: 1px solid #999; 
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    button {
+        margin: 20px 5px;
+    }
+}
+
+
+@media only screen and (max-width: 767px) {
+    main {
+        display: grid;
+        grid-template-columns: 3% 5% 84% 5% 3%;
+        grid-template-rows: 150px auto auto;
+        grid-template-areas: 
+        ". screen screen screen ." 
+        ". . hall . ."
+        ". . selection . ."
+    }
+}

@@ -1,20 +1,34 @@
-<!--The content below is only a placeholder and can be replaced.-->
   <h1  style="text-align:center">Welcome to {{ title }}!</h1>
   <main>
     <div class="screen">Screen</div>
     <div class="hall">
-      <ul>
-        <li *ngFor="let raw of _hall | async; let r = index;" style="display: inline-flex">
-          <span class="raw">{{ r + 1 }}</span>
-          <span class="seat" *ngFor="let seat of raw; let s = index;"
-                [ngClass]="{'selected': seat.selected }"  
-                [ngStyle]="seat.reserved && { 'background': 'red' }"
-                (click)="!seat.reserved && chooseSeat(r, s)">{{ s + 1 }}</span> 
-        </li>
-      </ul>
+      <mat-grid-list class="row" [cols]="SEATS" gutterSize="2vw" *ngFor="let row of hall | async; let r = index;">
+        <span class="row-number">{{ r + 1 }}</span>
+        <mat-grid-tile class="seat" 
+              *ngFor="let seat of row; let s = index;" 
+              [colspan]="1" 
+              [rowspan]="1"
+              [ngClass]="{'selected': seat.selected }"
+              [ngStyle]="seat.reserved && { 'background': 'red' }"
+              (click)="!seat.reserved && chooseSeat(r, s)">{{ s + 1 }}
+        </mat-grid-tile>
+      </mat-grid-list>
     </div>
     <div class="selection">
-      Choose your seats please
+      <ng-template #loading>
+        <h3>PLEASE CHOOSE YOUR SEATS</h3>
+      </ng-template>
+      <div *ngIf="(selectedSeats | async).length > 0; else loading">
+        <h3>CHOSEN SEATS</h3>
+        <div *ngFor="let place of selectedSeats | async">
+          Row: <b>{{place.row + 1}}</b>, Seat: <b>{{place.seat + 1}}</b>
+        </div>
+        <div class="total">Total: {{(selectedSeats | async).length * 100}} RUB</div>
+        <div class="action-buttons">
+          <button mat-raised-button (click)="clearSeats()">CLEAR</button>
+          <button mat-raised-button (click)="reserveSeats()">BUY</button>
+        </div>
+      </div>
     </div>
   </main>
 

@@ -1,0 +1,9 @@
+<h2 mat-dialog-title align="center">RESERVATION</h2>
+<mat-dialog-content>
+  <h3 *ngIf="!confirm">Are you sure you want to buy this tickets?</h3>
+  <h3 *ngIf="confirm">THANK YOU FOR RESERVATION!</h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ confirm ? 'OK' : 'NO'}}</button>
+  <button *ngIf="!confirm" mat-button [mat-dialog-close]="true">BUY</button>
+</mat-dialog-actions>

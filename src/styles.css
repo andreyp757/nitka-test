@@ -1,6 +1,8 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 html, body {
     font-family: Verdana,sans-serif;
-    font-size: 15px;
+    font-size: 1vh;
     line-height: 1.5;
     position: relative;
     min-height: 100%;

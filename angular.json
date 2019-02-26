@@ -132,5 +132,10 @@
       }
     }
   },
-  "defaultProject": "nitka-test"
+  "defaultProject": "nitka-test",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
